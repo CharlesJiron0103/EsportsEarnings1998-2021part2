@@ -1,0 +1,110 @@
+---
+title: "Esports Earnings 1998 - 2021"
+output: html_notebook
+Name: "Charles Jiron"
+Date: "1-20-2022"
+---
+
+# Installing Packages
+
+```{r}
+install.packages("tidyverse")
+install.packages("readr")
+```
+
+# Calling the Packages Library
+```{r}
+library(tidyverse)
+library(readr)
+```
+
+# Importing the Data set of Esports Earnings
+```{r}
+Esports <- read.csv("GeneralEsportData.csv")
+
+Esports
+```
+
+# Fig 1: Histogram
+
+## The Data set will be filter to feature only the Release Dates between 1998-2005.
+
+```{r}
+# The Data set will be filter to feature only the Release Dates greater than or equal to 1998 and less than or equal to 2005
+
+dataFilter <- filter(Esports, ReleaseDate >= 1998 & ReleaseDate <= 2005)
+
+dataFilter
+```
+
+## After filtering the data, it will than be process for selection to specified specific columns like (Release Date, Total Tournaments, and Genre).
+
+```{r}
+# The data after filtering will than be process for selection of specific columns of (Release Date, Total Tournaments, and Genre).
+
+histoGraph <- select(dataFilter,ReleaseDate, TotalTournaments, Genre)
+
+histoGraph
+```
+
+## Finally, the final process will than be used to create our Histogram of total tournaments withing an 8 year period while being fill with a specific fill color and outer color column.
+
+## Then labels were given to the graph to help the viewer understand what is going on.
+
+```{r}
+# Finally, the final process will than be used to create our Histogram of total tournaments withing an 8 year period while being fill with a specific fill color and outer color column.
+
+# Then labels were given to the graph to help the viewer understand what is going on.
+
+ggplot(data = histoGraph) + geom_histogram(mapping = aes(x = ReleaseDate), fill = "blue", color = "black", bins = 17) + labs(title = "Release Date Vs. Total Tournaments", subtitle = "Release Date: 1998 - 2005", x = "Year", y = "Total Tournaments", caption = "Kaggle Data Set")
+```
+
+Follow up: The Graph is helpful when it comes to comparing one item through a specific numeric period, especially if we want to figure out which year had less and which year had more. For example, the years that had the most total tournaments was between 2004-2005, while the least amount of total tournaments happened in 1998 and 2000s. To remember a Histogram is a visual representation of the distribution of a data set; Hence the visualizing of the graph.
+
+# Fig 2: Violin Plot
+
+## While using the same filter as before with the same selection coulnms we will than build our violin plot.
+
+```{r}
+# The data after filtering will than be process for selection of specific columns of (Release Date, Total Tournaments, and Genre).
+
+violinPlot <- select(dataFilter,ReleaseDate, TotalTournaments, Genre)
+
+violinPlot
+```
+
+## Finally, the final process will than be used to create our violin plot of total tournaments withing an 8 year period while being fill with a specific fill color and outer color column.
+
+## Then labels were given to the graph to help the viewer understand what is going on.
+
+```{r}
+# Finally, the final process will than be used to create our violin plot of total tournaments withing an 8 year period while being fill with a specific fill color and outer color column.
+
+# Then labels were given to the graph to help the viewer understand what is going on.
+
+ggplot(data = violinPlot, mapping = aes(x = TotalTournaments , y = ReleaseDate)) + geom_violin(fill = "blue", color = "black")+ labs(title = "Release Date Vs. Total Tournaments", subtitle = "Release Date: 1998 - 2005", y = "Year", x = "Total Tournaments", caption = "Kaggle Data Set")
+```
+
+Follow up: A Violin plot displays distributions of data similar to a box plot, except that a violin plot includes information on the relative number of data points with any given value. For example, in the plot above is the distributions of total tournaments within 1998-2005. The plot indicates that the median total tournaments was highest between 2004-2005, but the total tournaments in the 1998-2000 were more evenly divided than in the higher years.
+
+# Fig 3: Box plot
+
+## While using the same filter as before with the same selection coulnms we will than build our box plot.
+
+```{r}
+# The data after filtering will than be process for selection of specific columns of (Release Date, Total Tournaments, and Genre).
+
+boxPlot <- select(dataFilter,ReleaseDate, TotalTournaments, Genre)
+
+boxPlot
+```
+
+## Finally, the final process will than be used to create our box plot of total tournaments withing an 8 year period while being fill with the colunm Genre to specified which box plot.
+
+## Then labels were given to the graph to help the viewer understand what is going on.
+
+```{r}
+ggplot(data = boxPlot, mapping = aes(x =ReleaseDate, y = Genre, fill = Genre)) + geom_boxplot()+ labs(title = "Genre Vs. Release Date", subtitle = "Release Date: 1998 - 2005", x = "Year", y = "Genre", caption = "Kaggle Data Set")
+```
+
+Follow up: A box plot is a data visualization that uses box and several lines to depict data distribution of a data set. They are super helpful for depicting distributions of multiple things at once, depending on how you set up your data set. Nonetheless, with the plot above, it shows a distributions of game genres that are used most throughout the years of 1998-2005. Three genres stand out from the plot fighting Game, First-person shooting and Strategy. However, the genre that stretches out the most throughout many years is Fighting Games (1999-2004).
